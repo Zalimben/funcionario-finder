@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+}
+
+.footer-icon {
+  width: 16px;
+  height: 16px;
+}
+

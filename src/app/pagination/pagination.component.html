@@ -1,0 +1,41 @@
+<nav class="nav d-flex justify-content-end" aria-label="...">
+  <ul class="pagination pagination-sm flex-wrap">
+
+    <li class="page-item"
+        [ngClass]="{disabled: activePage === 1}">
+      <span class="page-link" (click)="onPrevPage()">
+        &laquo;
+      </span>
+    </li>
+
+    <li *ngIf="showDotsBeforeActive" class="page-item disabled">
+      <span class="page-link"> ... </span>
+    </li>
+
+    <li class="page-item"
+        [ngClass]="{'active' : item === activePage}"
+        *ngFor="let item of pages; let i = index;">
+      <a class="page-link" (click)="onChangePage(item)">
+        {{item}}
+      </a>
+    </li>
+
+    <li *ngIf="showDotsAfterActive" class="page-item disabled">
+      <span class="page-link"> ... </span>
+    </li>
+
+    <li *ngIf="showDotsAfterActive" class="page-item">
+      <a class="page-link" (click)="onChangePage(totalPages)">
+        {{totalPages}}
+      </a>
+    </li>
+
+    <li class="page-item"
+        [ngClass]="{disabled: activePage === totalPages}">
+      <span class="page-link" (click)="onNextPage()">
+        &raquo;
+      </span>
+    </li>
+
+  </ul>
+</nav>

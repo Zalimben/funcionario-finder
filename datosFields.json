@@ -1,0 +1,319 @@
+{
+    "fields": [
+        {
+            "name": "anio",
+            "title": "Año",
+            "type": "xsd:gYear",
+            "example": "2014",
+            "restrictions": "",
+            "formato": "",
+            "description": "Se refiere al año en el cual se realizó la asignación monetaria en los diferentes objetos del gasto al funcionario."
+        },
+        {
+            "name": "mes",
+            "title": "Mes",
+            "type": "xsd:gMonth",
+            "example": "1",
+            "restrictions": "",
+            "formato": "",
+            "description": "Se refiere al mes en el cual se realizó la asignación monetaria en los diferentes objetos del gasto al funcionario."
+        },
+        {
+            "name": "codigoNivel",
+            "title": "Código de Nivel",
+            "type": "xsd:integer",
+            "example": "12",
+            "restrictions": "Determinado por el Presupuesto General de la Nación.",
+            "formato": "",
+            "description": "Corresponde al identificador del nivel."
+        },
+        {
+            "name": "descripcionNivel",
+            "title": "Descripción de Nivel",
+            "type": "xsd:string",
+            "example": "PODER EJECUTIVO",
+            "restrictions": "Determinada por el Presupuesto General de la Nación.",
+            "formato": "",
+            "description": "Corresponde a la descripción del nivel. Representa la clasificación organizacional conforme a la estructura superior del Estado."
+        },
+        {
+            "name": "CodigoEntidad",
+            "title": "Código de Entidad",
+            "type": "xsd:integer",
+            "example": "7",
+            "restrictions": "Determinado por el Presupuesto General de la Nación.",
+            "formato": "",
+            "description": "Corresponde al identificador de la entidad asignado en el Presupuesto General de la Nación."
+        },
+        {
+            "name": "descripcionEntidad",
+            "title": "Descripción de Entidad",
+            "type": "xsd:string",
+            "example": "MINISTERIO DE EDUCACIÓN Y CULTURA",
+            "restrictions": "Determinada por el Presupuesto General de la Nación.",
+            "formato": "",
+            "description": "Corresponde a la descripción de la entidad. Son las reparticiones y dependencias de los organismos administrativamente independientes, en función a la misión legalmente asignada y a los objetivos programáticos del gobierno."
+        },
+        {
+            "name": "codigoPrograma",
+            "title": "Código Programa",
+            "type": "xsd:integer",
+            "example": "4",
+            "restrictions": "Determinado por el Presupuesto General de la Nación del correspondiente año fiscal.  ",
+            "formato": "",
+            "description": "Corresponde al identificador del programa."
+        },
+        {
+            "name": "descripcionPrograma",
+            "title": "Descripcion Programa",
+            "type": "xsd:string",
+            "example": "CONSOLIDACIÓN Y MEJORAM. DE LA EDUC. INIC. Y ESC. BÁSICA",
+            "restrictions": "Determinada por el Presupuesto General de la Nación del correspondiente año fiscal.",
+            "formato": "",
+            "description": "Corresponde a la descripción del programa. Es el instrumento presupuestario destinado a cumplir las funciones del Estado y sus planes a corto plazo y por el cual se establecen objetivos, resultados y metas a cumplirse mediante un conjunto de acciones integradas y obras específicas coordinadas, empleando los recursos humanos, materiales y financieros asignados a un costo global y unitario. Su ejecución queda a cargo de una unidad administrativa. Definido en la Ley 1535 Art. 10 Inc. a)."
+        },
+        {
+            "name": "codigoSubPrograma",
+            "title": "Código subprograma",
+            "type": "xsd:integer",
+            "example": "1",
+            "restrictions": "Determinado por el Presupuesto General de la Nación del correspondiente año fiscal. Sólo los programas, con Tipo de Presupuesto 2 o 3 tienen subprogramas.",
+            "formato": "",
+            "description": "Representa al identificador del subprograma."
+        },
+        {
+            "name": "descripcionSubPrograma",
+            "title": "Descripción SubPrograma",
+            "type": "xsd:string",
+            "example": "APOYO OPERATIVO A LA GESTIÓN CURRICULAR",
+            "restrictions": "Se rexsd:stringe a los subprogramas que poseen crédito presupuestario habilitado en el Presupuesto General de la Nación del correspondiente año fiscal.",
+            "formato": "",
+            "description": "Corresponde a la descripción del subprograma. Representa la división de programas complejos a fin de facilitar la ejecución en un campo específico. En el subprograma se fijan metas parciales que serán alcanzadas mediante acciones concretas y específicas por unidades operativas. Definido en la Ley 1535 Art. 10 Inc. b)."
+        },
+         {
+            "name": "codigoProyecto",
+            "title": "Código Proyecto",
+            "type": "xsd:integer",
+            "example": "0",
+            "restrictions": "Determinado por los proyectos que poseen crédito presupuestario habilitado en el Presupuesto General de la Nación del correspondiente año fiscal.",
+            "formato": "",
+            "description": "Indica el identificador del proyecto"
+        },
+        {
+            "name": "descripcionProyecto",
+            "title": "Descripción Proyecto",
+            "type": "xsd:string",
+            "example": "Servicios Culturales",
+            "restrictions": "Determinado por los proyectos que poseen crédito presupuestario habilitado en el Presupuesto General de la Nación del correspondiente año fiscal.",
+            "formato": "",
+            "description": "Corresponde a la descripción del proyecto. Representa el conjunto de obras que se realizarán dentro de un programa o subprograma de inversión para la formación de bienes de capital. Su ejecución estará a cargo de una unidad administrativa capaz de funcionar con eficacia en forma independiente. Definido en la Ley 1535 Art. 10 Inc. c)."
+        },
+        {
+            "name": "codigoUnidadResponsable",
+            "title": "Código de unidad responsable",
+            "type": "xsd:integer",
+            "example": "43",
+            "restrictions": "Determinado por el Presupuesto General de la Nación del correspondiente año fiscal. El código de unidad responsable debe ser interpretado en conjunto con el código de nivel y entidad al que corresponde.",
+            "formato": "",
+            "description": "Corresponde al identificador de la unidad responsable."
+        },
+        {
+            "name": "descripcionUnidadResponsable",
+            "title": "Descripción de unidad responsable",
+            "type": "xsd:string",
+            "example": "VICEMINISTERIO DE EDUCACIÓN",
+            "restrictions": "Determinado por el Presupuesto General de la Nación del correspondiente año fiscal.",
+            "formato": "",
+            "description": "Corresponde a la descripción de la unidad responsable. Representa la unidad responsable de la gestión de un programa, subprograma o proyecto presupuestario."
+        },
+        {
+            "name": "codigoObjetoGasto",
+            "title": "Código Objeto de gasto",
+            "type": "xsd:integer",
+            "example": "145",
+            "restrictions": "Pertenece a la Clasificación por Objeto del Gasto incluida en el Clasificador Presupuestario.",
+            "formato": "",
+            "description": "Representa el identificador del Objeto de Gasto."
+        },
+        {
+            "name": "objetoGasto",
+            "title": "Objeto de gasto",
+            "type": "xsd:string",
+            "example": "145 - HONORARIOS PROFESIONALES",
+            "restrictions": "Pertenece a la Clasificación por Objeto del Gasto incluida en el Clasificador Presupuestario.",
+            "formato": "",
+            "description": "Corresponde a la descripción del objeto de gasto. La clasificación por objetos del gasto permite identificar los tres últimos niveles del gasto público y se presenta como una ordenación sistemática y homogénea de toda las transacciones contenidas en el presupuesto de los organismos y entidades del estado tales como: servicios personales, servicios no personales, bienes de consumo e insumos, inversión física y financiera, transferencia y otros gastos, como resultado de las variaciones de sus activos y pasivos en el cumplimiento de su misión, fines, objetivos, metas que realizan en el desarrollo de sus diversas actividades institucionales. El mismo se puede encontrar en el siguiente link http://bit.ly/PGNPY2016 - Página 128."
+        },
+        {
+            "name": "pasajesViaticos",
+            "title": "Pasaje/Viaticos",
+            "type": "xsd:decimal",
+            "example": "2.500.000",
+            "restrictions": "",
+            "formato": "",
+            "description": "Son asignaciones que se otorgan por la prestación de servicios en la función, cargo o labor fuera del lugar habitual de trabajo, conforme a las normas y reglamentos vigentes (Ley N°2597/05 Que regula el otorgamiento de viáticos en la Administación Pública y modificaciones vigentes). Incluye el pago de pasajes a los agentes y/o empresas prestadoras del servicio."
+        },
+        {
+            "name": "linea",
+            "title": "Línea",
+            "type": "xsd:integer",
+            "example": "353",
+            "restrictions": "Se encuentra restricto por el Presupuesto General de la Nación del correspondiente año fiscal. Las Municipalidades y Gobernaciones son igual a cero.",
+            "formato": "",
+            "description": "Se refiere al código presupuestario asignado a una categoría en la Ley de Presupuesto General de la Nación."
+        },      
+        {
+            "name": "codigoPersona",
+            "title": "Cédula",
+            "type": "xsd:string",
+            "example": "1.234.567",
+            "restrictions": "",
+            "formato": "",
+            "description": "Número de documento de identidad del funcionario público, expedido por el Departamento de Identificaciones de la Policía Nacional u otra instancia similar del extranjero."
+        },
+        {
+            "name": "nombres",
+            "title": "Nombres",
+            "type": "xsd:string",
+            "example": "JUAN JOSE",
+            "restrictions": "",
+            "formato": "",
+            "description": "Nombre(s) del funcionario público."
+        },
+        {
+            "name": "apellidos",
+            "title": "Apellidos",
+            "type": "xsd:string",
+            "example": "PÉREZ DOLDÁN",
+            "restrictions": "",
+            "formato": "",
+            "description": "Apellido(s) del funcionario público."
+        },
+        {
+            "name": "fechaNacimiento",
+            "title": "Fecha Nacimiento",
+            "type": "date",
+            "example": "16/07/1982",
+            "restrictions": "",
+            "formato": "dd/mm/yyyy",
+            "description": "Fecha de Nacimiento del funcionario público."
+        },
+        {
+            "name": "sexo",
+            "title": "Sexo",
+            "type": "xsd:string",
+            "example": "MASCULINO",
+            "restrictions": "",
+            "formato": "",
+            "description": "Sexo del funcionario público"
+        }, 
+        {
+            "name": "discapacidad",
+            "title": "Discapacidad",
+            "type": "xsd:string",
+            "example": "N",
+            "restrictions": "S: Sí, N: No",
+            "formato": "",
+            "description": "Indica si el funcionario posee o no discapacidad, ya sea permanente o temporal."
+        },               
+        {
+            "name": "categoria",
+            "title": "Categoría",
+            "type": "xsd:string",
+            "example": "Z51",
+            "restrictions": "Se encuentra restricto por el Presupuesto General de la Nación del correspondiente año fiscal.",
+            "formato": "",
+            "description": "Corresponde a la clasificación establecida para un puesto, dependiendo del nivel jerárquico y otros parámetros de clasificación funcional."
+        },
+        {
+            "name": "cargo",
+            "title": "Cargo",
+            "type": "xsd:string",
+            "example": "CATEDRÁTICO",
+            "restrictions": "Se encuentra restricto por el Presupuesto General de la Nación del correspondiente año fiscal.",
+            "formato": "",
+            "description": "Nivel jerárquico que se le asigna al funcionario dentro de la organización y es establecida en el anexo de personal del Presupuesto General de la Nación."
+        },
+        {
+            "name": "horasCatedra",
+            "title": "Carga Horaria",
+            "type": "xsd:integer",
+            "example": "52",
+            "restrictions": "",
+            "formato": "",
+            "description": "Se refiere al horario o carga horaria que cumple el funcionario."
+        },
+        {
+            "name": "fechaIngreso",
+            "title": "Fecha Ingreso",
+            "type": "xsd:dateTime",
+            "example": "29/04/2000",
+            "restrictions": "",
+            "formato": "dd/mm/yyyy",
+            "description": "El año de ingreso del funcionario en la función pública."
+        },        
+        {
+            "name": "tipoPersonal",
+            "title": "Tipo Personal",
+            "type": "xsd:string",
+            "example": "Permanente",
+            "restrictions": "PER: Permanente, CON: Contratado, COM: Comisionado",
+            "formato": "",
+            "description": "Se refiere a situaciones particulares o específicas de un funcionario en un mes determinado pudiendo ser estos: permanente, contratado, comisionado."
+        },
+        {
+            "name": "lugar",
+            "title": "Lugar",
+            "type": "xsd:string",
+            "example": "",
+            "restrictions": "",
+            "formato": "",
+            "description": "Describe el Organismo y Entidad del Estado del cual es originario el funcionario en Comisión de Servicio. Este campo sólo es pertinente si el Movimiento corresponde a Traslados Temporales o definitivos"
+        },
+        {
+            "name": "montoPresupuestado",
+            "title": "Monto Presupuestado",
+            "type": "xsd:decimal",
+            "example": "5.755.500",
+            "restrictions": "Se encuentra restricto por el objeto de gasto asignado establecido en el Presupuesto General de la Nación del correspondiente año fiscal.",
+            "formato": "",
+            "description": "Corresponde a los fondos establecidos (monto bruto) para el/los objeto/s del gasto asignado/s al funcionario."
+        },
+        {
+            "name": "montoDevengado",
+            "title": "Monto Devengado",
+            "type": "xsd:decimal",
+            "example": "4.834.620",
+            "restrictions": "",
+            "formato": "",
+            "description": "Corresponde al monto calculado teniendo en cuenta el monto del jornal diario multiplicado por los días trabajados, sin los descuentos de multas."
+        },
+        {
+            "name": "mesCorte",
+            "title": "Mes Corte",
+            "type": "xsd:gMonth",
+            "example": "2",
+            "restrictions": "",
+            "formato": "",
+            "description": "Indica el mes de la actualización del conjunto de datos en cuestión."
+        },
+        {
+            "name": "anioCorte",
+            "title": "Año Corte",
+            "type": "xsd:gYear",
+            "example": "2016",
+            "restrictions": "",
+            "formato": "",
+            "description": "Indica el año de la actualización del conjunto de datos en cuestión."
+        },
+        {
+            "name": "fechaCorte",
+            "title": "Fecha Corte",
+            "type": "xsd:dateTime",
+            "example": "02/02/2016",
+            "restrictions": "",
+            "formato": "dd/mm/yyyy",
+            "description": "Indica la fecha de la actualización del conjunto de datos en cuestión."
+        }
+    ]
+}
