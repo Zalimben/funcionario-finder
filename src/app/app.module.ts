@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
-import { AppService } from "./app.service";
+import { AppService } from './app.service';
 import { PaginationComponent } from './pagination/pagination.component';
 
 import { NgxSpinnerModule } from 'ngx-spinner';

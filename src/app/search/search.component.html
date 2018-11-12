@@ -10,20 +10,25 @@
 <div>
   <!-- Search box by CI or Name -->
   <form style="padding:.5rem 1rem" class=" bg-light">
-    Búsqueda por Nombre o Cedula
+    Búsqueda de Funcionario por Nombre o Cedula
     <input class="form-control mr-sm-2"
            name="search"
            [(ngModel)]="pattern" #name="ngModel"
            placeholder="Nombre o Cedula"
            aria-label="Search"
            (keydown)="ngOnAutocomplete($event, 1)">
-    <div *ngIf="errorFuncionario">
-      No se puede recuperar los datos. Por favor, intente más tarde.
-    </div>
   </form>
 
+  <br>
+
+  <div *ngIf="!minPatternLength && searchPattern" class="card border-warning mb-3">
+    <div class="card-body">
+      <p class="card-text">Ingrese al menos 3 caracteres</p>
+    </div>
+  </div>
+
   <!-- Data -->
-  <div *ngIf="responseFuncionario">
+  <div *ngIf="!errorFuncionario && responseFuncionario && minPatternLength">
 
     <app-pagination [totalPages]="responseFuncionario.totalPages"
                     (changeActivePage)="changePage($event)">
@@ -46,7 +51,7 @@
             </td>
         </tr>
 
-        <tr  *ngIf="responseFuncionario.autocomplete.length <= 0">
+        <tr  *ngIf="responseFuncionario.autocomplete && responseFuncionario.autocomplete.length <= 0">
           <td class="text-left">
             Sin resultados
           </td>
@@ -55,11 +60,19 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Error message -->
+  <div *ngIf="errorFuncionario" class="card border-danger mb-3">
+    <div class="card-body text-danger ">
+      <p class="card-text">No se puede recuperar los datos. Por favor, intente más tarde.</p>
+    </div>
+  </div>
 </div>
 
 <!-- Search by CI and display salaries-->
 <div>
   <form style="padding: .5rem 1rem" class=" bg-light">
+    Búsqueda detalles del funcionario por cedula
     <input class="form-control mr-sm-2"
            name="search"
            [(ngModel)]="cedula" #name="ngModel"
@@ -69,56 +82,59 @@
   </form>
 
   <br>
-  <br>
-  <div>
-    <div *ngIf="foundMatch">
+
+  <div *ngIf="foundMatch">
+    <br>
+    <h3> Datos del Funcionario </h3>
+    <div id="id">
+     <strong> Nombre y Apellido: </strong> {{responseDetails.results[0].nombres}} {{responseDetails.results[0].apellidos}}
       <br>
-      <h3> Datos del Funcionario </h3>
-      <div id="id">
-       <strong> Nombre y Apellido: </strong> {{responseDetails.results[0].nombres}} {{responseDetails.results[0].apellidos}}
-        <br>
-       <strong> Nro. Documento: </strong> {{responseDetails.results[0].codigoPersona}}
-        <br>
-        <strong> Año: </strong> 2018
-      </div>
-
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-
-          <tr>
-            <th class="text-left" *ngFor="let month of months">
-              {{month}}
-            </th>
-          </tr>
-          </thead>
-
-          <tbody>
-
-          <tr>
-            <th class="text-left" *ngFor="let salary of getKeys(salary)">
-              {{salary}}
-            </th>
-          </tr>
-
-          <tr *ngIf="responseDetails.results.length <= 0">
-            <td class="text-left">
-              Sin resultados
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+     <strong> Nro. Documento: </strong> {{responseDetails.results[0].codigoPersona}}
+      <br>
+      <strong> Año: </strong> 2018
     </div>
 
-    <div *ngIf="errorDetails">
-      No se puede recuperar los datos. Por favor, intente más tarde.
-    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
 
-    <div *ngIf="!foundMatch && searched">
-      Sin resultados
-    </div>
+        <tr>
+          <th class="text-left" *ngFor="let month of months">
+            {{month}}
+          </th>
+        </tr>
+        </thead>
 
+        <tbody>
+
+        <tr>
+          <th class="text-left" *ngFor="let salary of getKeys(salary)">
+            {{salary}}
+          </th>
+        </tr>
+
+        <tr *ngIf="responseDetails.results.length <= 0">
+          <td class="text-left">
+            Sin resultados
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="errorDetails" class="card border-danger mb-3">
+    <div class="card-body text-danger ">
+      <p class="card-text">No se puede recuperar los datos. Por favor, intente más tarde.</p>
+    </div>
+  </div>
+
+  <!-- No results -->
+  <div *ngIf="!foundMatch && searched" class="card border-warning mb-3">
+    <div class="card-body">
+      <p class="card-text">Sin resultados.</p>
+    </div>
   </div>
 
 </div>

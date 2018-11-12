@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from "../app.service";
-import { NgxSpinnerService } from "ngx-spinner";
+import { AppService } from '../app.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { of } from 'rxjs';
+import { catchError, concatMap, timeout } from 'rxjs/operators';
+
+const DEFAULT_TIMEOUT = 15000;
 
 @Component({
   selector: 'app-search',
@@ -12,8 +16,10 @@ export class SearchComponent implements OnInit {
   cedula: number;
 
   initPage = 1;
-  pattern = "";
-  prevPattern = "";
+  pattern = '';
+  prevPattern = '';
+  minPatternLength = false;
+  searchPattern = false;
 
   searched = false;
   foundMatch = false;
@@ -22,8 +28,7 @@ export class SearchComponent implements OnInit {
 
   errorFuncionario = false;
   responseFuncionario;
-
-  title = 'Grafico';
+  serverError = false;
 
   // map to store incomes
   salary = new Map();
@@ -52,47 +57,59 @@ export class SearchComponent implements OnInit {
    * Static initialization of months
    */
   private initMonthsMap() {
-    this.months.push("Enero");
-    this.months.push("Febrero");
-    this.months.push("Marzo");
-    this.months.push("Abril");
-    this.months.push("Mayo");
-    this.months.push("Junio");
-    this.months.push("Julio");
-    this.months.push("Agosto");
-    this.months.push("Septiembre");
-    this.months.push("Octubre");
-    this.months.push("Noviembre");
-    this.months.push("Diciembre");
+    this.months.push('Enero');
+    this.months.push('Febrero');
+    this.months.push('Marzo');
+    this.months.push('Abril');
+    this.months.push('Mayo');
+    this.months.push('Junio');
+    this.months.push('Julio');
+    this.months.push('Agosto');
+    this.months.push('Septiembre');
+    this.months.push('Octubre');
+    this.months.push('Noviembre');
+    this.months.push('Diciembre');
   }
 
   ngOnInit() {
 
   }
 
-
   ngOnSelectedFuncionario(funcionario: string) {
     this.cedula = Number.parseInt((funcionario.match(/\d+/g)).toString());
-    this.ngOnSearch()
+    this.ngOnSearch();
   }
 
   /**
    * Make a call to the API using the CI as parameter
    */
   ngOnSearch() {
+    this.serverError = false;
     this.spinner.show();
     this.salary = new Map();
 
     if (this.cedula && this.cedula > 0) {
-      this.appService.getDetails(this.cedula).subscribe(
+      this.appService.getDetails(this.cedula)
+        .pipe(
+          timeout(DEFAULT_TIMEOUT),
+          catchError(() => {
+            this.errorDetails = true;
+            this.spinner.hide();
+            console.error('Request canceled after ', DEFAULT_TIMEOUT);
+            return of(`Request timed out after: ${DEFAULT_TIMEOUT}`);
+          }),
+        )
+        .subscribe(
         details => {
           this.responseDetails = details;
           this.foundMatch = this.responseDetails && this.responseDetails.results.length > 0;
           this.extractedSalaryPerMonth();
+          this.errorDetails = false;
         },
-        error => {
+        () => {
           this.foundMatch = false;
           this.errorDetails = true;
+          this.spinner.hide();
         },
         () => {
           this.searched = true;
@@ -108,8 +125,8 @@ export class SearchComponent implements OnInit {
   private extractedSalaryPerMonth() {
     let sum = 0;
     this.responseDetails.results.forEach(activity => {
-      let month = activity.mes;
-      let salary = activity.montoPresupuestado;
+      const month = activity.mes;
+      const salary = activity.montoPresupuestado;
 
       if (this.salary.has(month)) {
         sum = this.salary.get(month) + salary;
@@ -121,8 +138,8 @@ export class SearchComponent implements OnInit {
   }
 
   /**
-   * * Make a call to the API for the next page
-   * @param selectedPage
+   * Make a call to the API for the next page
+   * @param selectedPage Selected Page
    */
   changePage(selectedPage: number) {
     this.spinner.show();
@@ -133,9 +150,9 @@ export class SearchComponent implements OnInit {
     }
 
     // test spinner
-    // this.responseFuncionario = {"total" : 5,
-    //   "autocomplete" : [ "LOURDES CAÑETE MOLINAS (6089520)", "LOURDES GONZALEZ RUIZ (5064941)" ],
-    //   "totalPages" : 4};
+    // this.responseFuncionario = {'total' : 5,
+    //   'autocomplete' : [ 'LOURDES CAÑETE MOLINAS (6089520)', 'LOURDES GONZALEZ RUIZ (5064941)' ],
+    //   'totalPages' : 4};
     // this.spinner.hide();
 
     this.appService.autoComplete(this.pattern, this.initPage).subscribe(
@@ -147,7 +164,7 @@ export class SearchComponent implements OnInit {
       }, () => {
         this.spinner.hide();
       }
-    )
+    );
   }
 
   /**
@@ -157,9 +174,11 @@ export class SearchComponent implements OnInit {
    * Because the API does not support searches with fewer characters.
    */
   ngOnAutocomplete(event, selectedPage: number) {
-    if (event.key === "Enter") {
-      this.spinner.show();
+    if (event.key === 'Enter') {
+      this.searchPattern = true;
       if (this.pattern.length >= 3) {
+        this.minPatternLength = true;
+        this.spinner.show();
         if (this.prevPattern !== this.pattern) {
           selectedPage = 1;
           this.prevPattern = this.pattern;
@@ -171,16 +190,31 @@ export class SearchComponent implements OnInit {
           this.initPage = 1;
         }
 
-        this.appService.autoComplete(this.pattern, this.initPage).subscribe(
+        this.appService.autoComplete(this.pattern, this.initPage)
+          .pipe(
+                timeout(DEFAULT_TIMEOUT),
+                catchError(() => {
+                  this.errorFuncionario = true;
+                  this.spinner.hide();
+                  console.error('Request canceled after ', DEFAULT_TIMEOUT);
+                  return of(`Request timed out after: ${DEFAULT_TIMEOUT}`);
+                }),
+            )
+          .subscribe(
           lista => {
             this.responseFuncionario = lista;
+            this.errorFuncionario = false;
           },
-          error => {
+          () => {
             this.errorFuncionario = true;
+            this.spinner.hide();
           }, () => {
             this.spinner.hide();
           }
         );
+      } else {
+        this.minPatternLength = false;
+        this.responseFuncionario = {};
       }
     }
   }
