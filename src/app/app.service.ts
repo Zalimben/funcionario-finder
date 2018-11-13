@@ -46,7 +46,7 @@ export class AppService {
 
       let ci = Number.parseInt(pattern);
 
-      if(isNaN(ci) ) {
+      if (isNaN(ci) ) {
         return this.http.get<results>(this.autoCompleteUrl + busqueda + defaultParams);
       } else {
         return this.http.get<results>(this.autoCompleteUrl + busqueda + defaultParams + field);

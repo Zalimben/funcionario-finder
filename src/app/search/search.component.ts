@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { of } from 'rxjs';
-import { catchError, concatMap, timeout } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
 
 const DEFAULT_TIMEOUT = 15000;
 
@@ -89,14 +89,14 @@ export class SearchComponent implements OnInit {
     this.salary = new Map();
 
     if (this.cedula && this.cedula > 0) {
+      this.searched = true;
       this.appService.getDetails(this.cedula)
         .pipe(
           timeout(DEFAULT_TIMEOUT),
           catchError(() => {
             this.errorDetails = true;
-            this.spinner.hide();
-            console.error('Request canceled after ', DEFAULT_TIMEOUT);
-            return of(`Request timed out after: ${DEFAULT_TIMEOUT}`);
+            console.error('Request timed out after ', DEFAULT_TIMEOUT);
+            return of();
           }),
         )
         .subscribe(
@@ -104,7 +104,6 @@ export class SearchComponent implements OnInit {
           this.responseDetails = details;
           this.foundMatch = this.responseDetails && this.responseDetails.results.length > 0;
           this.extractedSalaryPerMonth();
-          this.errorDetails = false;
         },
         () => {
           this.foundMatch = false;
@@ -112,7 +111,6 @@ export class SearchComponent implements OnInit {
           this.spinner.hide();
         },
         () => {
-          this.searched = true;
           this.spinner.hide();
         }
       );
@@ -159,7 +157,7 @@ export class SearchComponent implements OnInit {
       lista => {
         this.responseFuncionario = lista;
       },
-      error => {
+      () => {
         this.errorFuncionario = true;
       }, () => {
         this.spinner.hide();
@@ -195,15 +193,13 @@ export class SearchComponent implements OnInit {
                 timeout(DEFAULT_TIMEOUT),
                 catchError(() => {
                   this.errorFuncionario = true;
-                  this.spinner.hide();
-                  console.error('Request canceled after ', DEFAULT_TIMEOUT);
-                  return of(`Request timed out after: ${DEFAULT_TIMEOUT}`);
+                  console.error('Request timed out after: ', DEFAULT_TIMEOUT);
+                  return of();
                 }),
             )
           .subscribe(
           lista => {
             this.responseFuncionario = lista;
-            this.errorFuncionario = false;
           },
           () => {
             this.errorFuncionario = true;

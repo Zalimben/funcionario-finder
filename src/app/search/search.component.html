@@ -83,6 +83,7 @@
 
   <br>
 
+  <!-- Results -->
   <div *ngIf="foundMatch">
     <br>
     <h3> Datos del Funcionario </h3>
@@ -131,7 +132,7 @@
   </div>
 
   <!-- No results -->
-  <div *ngIf="!foundMatch && searched" class="card border-warning mb-3">
+  <div *ngIf="!errorDetails && !foundMatch && searched" class="card border-warning mb-3">
     <div class="card-body">
       <p class="card-text">Sin resultados.</p>
     </div>
