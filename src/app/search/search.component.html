@@ -110,7 +110,7 @@
 
         <tr>
           <th class="text-left" *ngFor="let salary of getKeys(salary)">
-            {{salary}}
+            {{salary | currency:'Gs.': 'symbol' : '1.0'}}
           </th>
         </tr>
 
