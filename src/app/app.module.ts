@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -10,6 +11,9 @@ import { PaginationComponent } from './pagination/pagination.component';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+import localePy from '@angular/common/locales/es-PY';
+
+registerLocaleData(localePy, 'es-PY');
 
 @NgModule({
   declarations: [
@@ -25,6 +29,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   ],
   providers: [
     AppService,
+    {provide: LOCALE_ID, useValue: "es-PY"}
   ],
   bootstrap: [AppComponent]
 })
