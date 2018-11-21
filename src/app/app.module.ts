@@ -29,7 +29,7 @@ registerLocaleData(localePy, 'es-PY');
   ],
   providers: [
     AppService,
-    {provide: LOCALE_ID, useValue: "es-PY"}
+    {provide: LOCALE_ID, useValue: 'es-PY'}
   ],
   bootstrap: [AppComponent]
 })
