@@ -12,7 +12,6 @@ const DEFAULT_TIMEOUT = 15000;
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
   cedula: number;
 
   initPage = 1;
@@ -36,12 +35,12 @@ export class SearchComponent implements OnInit {
   // map to store months
   months = [];
 
-  constructor(private appService: AppService,
-              private spinner: NgxSpinnerService) {
-
+  constructor(
+    private appService: AppService,
+    private spinner: NgxSpinnerService
+  ) {
     // Static stuff
     this.initMonthsMap();
-
   }
 
   /**
@@ -71,12 +70,10 @@ export class SearchComponent implements OnInit {
     this.months.push('Diciembre');
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ngOnSelectedFuncionario(funcionario: string) {
-    this.cedula = Number.parseInt((funcionario.match(/\d+/g)).toString());
+    this.cedula = Number.parseInt(funcionario.match(/\d+/g).toString(), 10);
     this.ngOnSearch();
   }
 
@@ -90,30 +87,32 @@ export class SearchComponent implements OnInit {
 
     if (this.cedula && this.cedula > 0) {
       this.searched = true;
-      this.appService.getDetails(this.cedula)
+      this.appService
+        .getDetails(this.cedula)
         .pipe(
           timeout(DEFAULT_TIMEOUT),
           catchError(() => {
             this.errorDetails = true;
             console.error('Request timed out after ', DEFAULT_TIMEOUT);
             return of();
-          }),
+          })
         )
         .subscribe(
-        details => {
-          this.responseDetails = details;
-          this.foundMatch = this.responseDetails && this.responseDetails.results.length > 0;
-          this.extractedSalaryPerMonth();
-        },
-        () => {
-          this.foundMatch = false;
-          this.errorDetails = true;
-          this.spinner.hide();
-        },
-        () => {
-          this.spinner.hide();
-        }
-      );
+          details => {
+            this.responseDetails = details;
+            this.foundMatch =
+              this.responseDetails && this.responseDetails.results.length > 0;
+            this.extractedSalaryPerMonth();
+          },
+          () => {
+            this.foundMatch = false;
+            this.errorDetails = true;
+            this.spinner.hide();
+          },
+          () => {
+            this.spinner.hide();
+          }
+        );
     } else {
       this.foundMatch = false;
       this.spinner.hide();
@@ -159,7 +158,8 @@ export class SearchComponent implements OnInit {
       },
       () => {
         this.errorFuncionario = true;
-      }, () => {
+      },
+      () => {
         this.spinner.hide();
       }
     );
@@ -188,31 +188,32 @@ export class SearchComponent implements OnInit {
           this.initPage = 1;
         }
 
-        this.appService.autoComplete(this.pattern, this.initPage)
+        this.appService
+          .autoComplete(this.pattern, this.initPage)
           .pipe(
-                timeout(DEFAULT_TIMEOUT),
-                catchError(() => {
-                  this.errorFuncionario = true;
-                  console.error('Request timed out after: ', DEFAULT_TIMEOUT);
-                  return of();
-                }),
-            )
+            timeout(DEFAULT_TIMEOUT),
+            catchError(() => {
+              this.errorFuncionario = true;
+              console.error('Request timed out after: ', DEFAULT_TIMEOUT);
+              return of();
+            })
+          )
           .subscribe(
-          lista => {
-            this.responseFuncionario = lista;
-          },
-          () => {
-            this.errorFuncionario = true;
-            this.spinner.hide();
-          }, () => {
-            this.spinner.hide();
-          }
-        );
+            lista => {
+              this.responseFuncionario = lista;
+            },
+            () => {
+              this.errorFuncionario = true;
+              this.spinner.hide();
+            },
+            () => {
+              this.spinner.hide();
+            }
+          );
       } else {
         this.minPatternLength = false;
         this.responseFuncionario = {};
       }
     }
   }
-
 }

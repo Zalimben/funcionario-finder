@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { results } from './model/funcionario';
+import { Results } from './model/funcionario';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +21,13 @@ export class AppService {
    * Gets details
    * @param ci Identification number
    */
-  getDetails(ci: number): Observable<results> {
+  getDetails(ci: number): Observable<Results> {
     console.log('Get details called');
 
     // TODO: Remove after page and year filter functionality
     const defaultParams = '?page=1&by_anho=2018';
 
-    return this.http.get<results>(this.detailsUrl + ci + defaultParams);
+    return this.http.get<Results>(this.detailsUrl + ci + defaultParams);
 
   }
 
@@ -36,7 +36,7 @@ export class AppService {
    * @param pattern pattern to search
    * @param page Page Number
    */
-  autoComplete(pattern: string, page: number): Observable<results> {
+  autoComplete(pattern: string, page: number): Observable<Results> {
       console.log('Auto-complete called');
 
       // TODO: Remove after pagination functionality
@@ -44,12 +44,12 @@ export class AppService {
       const busqueda = '?q=' + pattern;
       const field = '&field=cedula';
 
-      let ci = Number.parseInt(pattern);
+      const ci = Number.parseInt(pattern, 10);
 
       if (isNaN(ci) ) {
-        return this.http.get<results>(this.autoCompleteUrl + busqueda + defaultParams);
+        return this.http.get<Results>(this.autoCompleteUrl + busqueda + defaultParams);
       } else {
-        return this.http.get<results>(this.autoCompleteUrl + busqueda + defaultParams + field);
+        return this.http.get<Results>(this.autoCompleteUrl + busqueda + defaultParams + field);
       }
   }
 
