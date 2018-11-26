@@ -1,12 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  OnChanges,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })
-export class PaginationComponent implements OnInit {
-
+export class PaginationComponent implements OnInit, OnChanges {
   @Input() totalPages: number;
   @Output() changeActivePage = new EventEmitter<number>();
 
@@ -18,7 +25,7 @@ export class PaginationComponent implements OnInit {
   showLastPage: boolean;
   pages;
 
-  constructor( ) { }
+  constructor() {}
 
   /**
    * Initial State of Pagination component
@@ -36,7 +43,6 @@ export class PaginationComponent implements OnInit {
    * @param changes page event
    */
   ngOnChanges(changes: SimpleChanges) {
-
     this.totalPages = changes.totalPages.currentValue;
     this.pages = this.paginationPages();
   }
@@ -45,21 +51,20 @@ export class PaginationComponent implements OnInit {
    * Constructor for Pagination pages
    */
   paginationPages(): number[] {
-    
-    const displayNumber = Math.floor(this.minDisplayedPages/2);
-    let array = [];
-    
+    const displayNumber = Math.floor(this.minDisplayedPages / 2);
+    const array = [];
+
     let startPage = this.activePage - displayNumber;
     let endPage = this.activePage + displayNumber;
 
-    if( startPage <= 1 ) {
+    if (startPage <= 1) {
       startPage = 1;
       this.showDotsAfterActive = false;
     } else {
       this.showDotsBeforeActive = true;
     }
 
-    if( endPage >= this.totalPages ) {
+    if (endPage >= this.totalPages) {
       endPage = this.totalPages;
       this.showDotsAfterActive = false;
     } else {
@@ -69,7 +74,7 @@ export class PaginationComponent implements OnInit {
     this.showLastPage = this.totalPages >= endPage;
 
     for (let x = startPage; x <= endPage; x++) {
-        array.push(x);
+      array.push(x);
     }
 
     return array;
@@ -91,7 +96,7 @@ export class PaginationComponent implements OnInit {
    */
   onPrevPage() {
     console.log('Previous page ...');
-    this.activePage = this.activePage -1;
+    this.activePage = this.activePage - 1;
     this.changeActivePage.emit(this.activePage);
     this.pages = this.paginationPages();
   }
@@ -101,9 +106,8 @@ export class PaginationComponent implements OnInit {
    */
   onNextPage() {
     console.log('Next page ...');
-    this.activePage = this.activePage +1;
+    this.activePage = this.activePage + 1;
     this.changeActivePage.emit(this.activePage);
     this.pages = this.paginationPages();
   }
-
 }

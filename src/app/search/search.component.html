@@ -36,7 +36,7 @@
 
     <table class="table table-hover table-striped">
       <caption>
-        <strong> Total {{responseFuncionario.total}}</strong>
+        <strong> Total {{responseFuncionario.total | number}}</strong>
       </caption>
       <thead>
         <tr>
@@ -83,15 +83,16 @@
 
   <br>
 
+  <!-- Results -->
   <div *ngIf="foundMatch">
     <br>
     <h3> Datos del Funcionario </h3>
     <div id="id">
      <strong> Nombre y Apellido: </strong> {{responseDetails.results[0].nombres}} {{responseDetails.results[0].apellidos}}
       <br>
-     <strong> Nro. Documento: </strong> {{responseDetails.results[0].codigoPersona}}
+     <strong> Nro. Documento: </strong> {{responseDetails.results[0].codigoPersona | number}}
       <br>
-      <strong> Año: </strong> 2018
+      <strong> Año: </strong> {{2018 | number }}
     </div>
 
     <div class="table-responsive">
@@ -109,7 +110,7 @@
 
         <tr>
           <th class="text-left" *ngFor="let salary of getKeys(salary)">
-            {{salary}}
+            {{salary | currency:'₲': 'symbol' : '1.0'}}
           </th>
         </tr>
 
@@ -131,7 +132,7 @@
   </div>
 
   <!-- No results -->
-  <div *ngIf="!foundMatch && searched" class="card border-warning mb-3">
+  <div *ngIf="!errorDetails && !foundMatch && searched" class="card border-warning mb-3">
     <div class="card-body">
       <p class="card-text">Sin resultados.</p>
     </div>

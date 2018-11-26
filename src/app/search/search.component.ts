@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { of } from 'rxjs';
-import { catchError, concatMap, timeout } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
 
 const DEFAULT_TIMEOUT = 15000;
 
@@ -12,7 +12,6 @@ const DEFAULT_TIMEOUT = 15000;
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
   cedula: number;
 
   initPage = 1;
@@ -36,12 +35,12 @@ export class SearchComponent implements OnInit {
   // map to store months
   months = [];
 
-  constructor(private appService: AppService,
-              private spinner: NgxSpinnerService) {
-
+  constructor(
+    private appService: AppService,
+    private spinner: NgxSpinnerService
+  ) {
     // Static stuff
     this.initMonthsMap();
-
   }
 
   /**
@@ -71,12 +70,10 @@ export class SearchComponent implements OnInit {
     this.months.push('Diciembre');
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ngOnSelectedFuncionario(funcionario: string) {
-    this.cedula = Number.parseInt((funcionario.match(/\d+/g)).toString());
+    this.cedula = Number.parseInt(funcionario.match(/\d+/g).toString(), 10);
     this.ngOnSearch();
   }
 
@@ -89,33 +86,33 @@ export class SearchComponent implements OnInit {
     this.salary = new Map();
 
     if (this.cedula && this.cedula > 0) {
-      this.appService.getDetails(this.cedula)
+      this.searched = true;
+      this.appService
+        .getDetails(this.cedula)
         .pipe(
           timeout(DEFAULT_TIMEOUT),
           catchError(() => {
             this.errorDetails = true;
-            this.spinner.hide();
-            console.error('Request canceled after ', DEFAULT_TIMEOUT);
-            return of(`Request timed out after: ${DEFAULT_TIMEOUT}`);
-          }),
+            console.error('Request timed out after ', DEFAULT_TIMEOUT);
+            return of();
+          })
         )
         .subscribe(
-        details => {
-          this.responseDetails = details;
-          this.foundMatch = this.responseDetails && this.responseDetails.results.length > 0;
-          this.extractedSalaryPerMonth();
-          this.errorDetails = false;
-        },
-        () => {
-          this.foundMatch = false;
-          this.errorDetails = true;
-          this.spinner.hide();
-        },
-        () => {
-          this.searched = true;
-          this.spinner.hide();
-        }
-      );
+          details => {
+            this.responseDetails = details;
+            this.foundMatch =
+              this.responseDetails && this.responseDetails.results.length > 0;
+            this.extractedSalaryPerMonth();
+          },
+          () => {
+            this.foundMatch = false;
+            this.errorDetails = true;
+            this.spinner.hide();
+          },
+          () => {
+            this.spinner.hide();
+          }
+        );
     } else {
       this.foundMatch = false;
       this.spinner.hide();
@@ -159,9 +156,10 @@ export class SearchComponent implements OnInit {
       lista => {
         this.responseFuncionario = lista;
       },
-      error => {
+      () => {
         this.errorFuncionario = true;
-      }, () => {
+      },
+      () => {
         this.spinner.hide();
       }
     );
@@ -190,33 +188,32 @@ export class SearchComponent implements OnInit {
           this.initPage = 1;
         }
 
-        this.appService.autoComplete(this.pattern, this.initPage)
+        this.appService
+          .autoComplete(this.pattern, this.initPage)
           .pipe(
-                timeout(DEFAULT_TIMEOUT),
-                catchError(() => {
-                  this.errorFuncionario = true;
-                  this.spinner.hide();
-                  console.error('Request canceled after ', DEFAULT_TIMEOUT);
-                  return of(`Request timed out after: ${DEFAULT_TIMEOUT}`);
-                }),
-            )
+            timeout(DEFAULT_TIMEOUT),
+            catchError(() => {
+              this.errorFuncionario = true;
+              console.error('Request timed out after: ', DEFAULT_TIMEOUT);
+              return of();
+            })
+          )
           .subscribe(
-          lista => {
-            this.responseFuncionario = lista;
-            this.errorFuncionario = false;
-          },
-          () => {
-            this.errorFuncionario = true;
-            this.spinner.hide();
-          }, () => {
-            this.spinner.hide();
-          }
-        );
+            lista => {
+              this.responseFuncionario = lista;
+            },
+            () => {
+              this.errorFuncionario = true;
+              this.spinner.hide();
+            },
+            () => {
+              this.spinner.hide();
+            }
+          );
       } else {
         this.minPatternLength = false;
         this.responseFuncionario = {};
       }
     }
   }
-
 }
