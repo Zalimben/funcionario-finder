@@ -10,7 +10,7 @@
 - [Signing the CLA](#cla)
 
 ## <a name="coc"></a> Code of Conduct
-  Help us keep the app open and inclusive. Please read and follow our [Code of Conduct][coc].
+  Help us keep the app open and inclusive. Please read and follow our [Code of Conduct](https://github.com/Zalimben/funcionario-finder/blob/dev/CODE_OF_CONDUCT.md).
 
 ## <a name="question"></a> Got a Question or Problem?
   Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests. 
