@@ -12,6 +12,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 import localePy from '@angular/common/locales/es-PY';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localePy, 'es-PY');
 
@@ -25,7 +26,8 @@ registerLocaleData(localePy, 'es-PY');
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AppService,

@@ -9,7 +9,7 @@ import { Results } from './model/funcionario';
 export class AppService {
 
   // URL to the details service
-  private detailsUrl = 'https://datos.hacienda.gov.py/odmh-api-v1/rest/api/v1/nomina/detalle/';
+  private detailsUrl = 'https://datos.hacienda.gov.py/odmh-api-v2/rest/api/v2/nomina/detalle/';
 
   // URL to autocomplete service
   private autoCompleteUrl = 'https://datos.hacienda.gov.py/odmh-core/rest/nomina/autocompletePersonas';
@@ -19,13 +19,14 @@ export class AppService {
 
   /**
    * Gets details
+   * 
    * @param ci Identification number
    */
   getDetails(ci: number): Observable<Results> {
     console.log('Get details called');
 
     // TODO: Remove after page and year filter functionality
-    const defaultParams = '?page=1&by_anho=2018';
+    const defaultParams = '?page=1&by_anho=2021';
 
     return this.http.get<Results>(this.detailsUrl + ci + defaultParams);
 
@@ -33,6 +34,7 @@ export class AppService {
 
   /**
    * Search by a pattern
+   * 
    * @param pattern pattern to search
    * @param page Page Number
    */
